@@ -12,6 +12,7 @@ Then run the solutions
 
 ```
 ./result/bin/day01
+./result/bin/day02
 ```
 
 # Develop
