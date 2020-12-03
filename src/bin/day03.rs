@@ -16,7 +16,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let file = File::open("inputs/day03.txt")?;
     let lines = io::BufReader::new(file).lines();
 
-    let lines: Vec<String> = lines.map(|line| line.unwrap()).collect();
+    let lines: Vec<String> = lines.filter_map(Result::ok).collect();
 
     println!("Part 1 {:?}", trees(&lines, 3, 1));
 
