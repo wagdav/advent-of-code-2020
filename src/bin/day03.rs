@@ -35,11 +35,11 @@ fn main() -> Result<(), Box<dyn Error>> {
 }
 
 #[cfg(test)]
-mod tests_part1 {
+mod tests {
     use super::*;
 
     #[test]
-    fn example1() {
+    fn example() {
         let example = vec![
             "..##.......".to_string(),
             "#...#...#..".to_string(),
