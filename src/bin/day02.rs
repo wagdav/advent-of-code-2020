@@ -1,4 +1,5 @@
 use regex::Regex;
+use std::error::Error;
 use std::fs::File;
 use std::io::{self, BufRead};
 
@@ -40,29 +41,13 @@ impl Entry {
             (?P<password>[[:alpha:]]+)
             ",
         )
-        .unwrap();
-        let captures = re.captures(input).unwrap();
+        .expect("Invalid regular expression");
+        let captures = re.captures(input)?;
 
-        let min_occurs = captures
-            .name("min_occurs")
-            .unwrap()
-            .as_str()
-            .parse()
-            .unwrap();
-        let max_occurs = captures
-            .name("max_occurs")
-            .unwrap()
-            .as_str()
-            .parse()
-            .unwrap();
-        let letter = captures
-            .name("letter")
-            .unwrap()
-            .as_str()
-            .chars()
-            .next()
-            .unwrap();
-        let password = captures.name("password").unwrap().as_str().to_string();
+        let min_occurs = captures.name("min_occurs")?.as_str().parse().ok()?;
+        let max_occurs = captures.name("max_occurs")?.as_str().parse().ok()?;
+        let letter = captures.name("letter")?.as_str().chars().next()?;
+        let password = captures.name("password")?.as_str().to_string();
 
         Some(Self {
             min_occurs,
@@ -73,17 +58,17 @@ impl Entry {
     }
 }
 
-fn main() {
-    let file = File::open("inputs/day02.txt").unwrap();
+fn main() -> Result<(), Box<dyn Error>> {
+    let file = File::open("inputs/day02.txt")?;
     let lines = io::BufReader::new(file).lines();
 
-    let lines: Vec<String> = lines.map(|line| line.unwrap()).collect();
+    let lines: Vec<String> = lines.filter_map(Result::ok).collect();
 
     println!(
         "Part 1 {:?}",
         lines
             .iter()
-            .map(|line| Entry::parse(&line).unwrap())
+            .filter_map(|line| Entry::parse(&line))
             .filter(|entry| entry.valid_part1())
             .count()
     );
@@ -92,10 +77,12 @@ fn main() {
         "Part 2 {:?}",
         lines
             .iter()
-            .map(|line| Entry::parse(&line).unwrap())
+            .filter_map(|line| Entry::parse(&line))
             .filter(|entry| entry.valid_part2())
             .count()
     );
+
+    Ok(())
 }
 
 #[cfg(test)]
