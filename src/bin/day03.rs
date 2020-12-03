@@ -1,3 +1,4 @@
+use std::error::Error;
 use std::fs::File;
 use std::io::{self, BufRead};
 
@@ -11,8 +12,8 @@ fn trees(input: &[String], right: usize, down: usize) -> usize {
         .count()
 }
 
-fn main() {
-    let file = File::open("inputs/day03.txt").unwrap();
+fn main() -> Result<(), Box<dyn Error>> {
+    let file = File::open("inputs/day03.txt")?;
     let lines = io::BufReader::new(file).lines();
 
     let lines: Vec<String> = lines.map(|line| line.unwrap()).collect();
@@ -29,6 +30,8 @@ fn main() {
     .iter()
     .product();
     println!("Part 2 {:?}", prod);
+
+    Ok(())
 }
 
 #[cfg(test)]
