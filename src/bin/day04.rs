@@ -1,8 +1,7 @@
 use regex::Regex;
 use std::collections::HashMap;
 use std::error::Error;
-use std::fs::File;
-use std::io::{self, BufRead};
+use std::fs::read_to_string;
 
 #[derive(Debug, PartialEq, Eq, Hash)]
 enum Field {
@@ -120,9 +119,7 @@ fn valid_part2(entry: &Entry) -> bool {
 }
 
 fn parse_line(line: &str) -> Option<Entry> {
-    if line == "" {
-        return None;
-    }
+    let line = line.trim();
 
     let mut ret = Entry::new();
 
@@ -138,39 +135,30 @@ fn parse_line(line: &str) -> Option<Entry> {
     Some(ret)
 }
 
-fn parse<I>(lines: I) -> Vec<Entry>
-where
-    I: Iterator<Item = String>,
-{
+fn parse(lines: &[&str]) -> Vec<Entry> {
     let mut entries = Vec::<Entry>::new();
-    let mut cur = Entry::new();
-    for line in lines {
-        let entry = parse_line(&line.trim());
 
-        match entry {
-            None => {
-                entries.push(cur);
-                cur = Entry::new();
-                continue;
-            }
+    let groups = lines.split(|&line| line == "");
 
-            Some(x) => {
-                for (field, value) in x {
-                    cur.insert(field, value);
-                }
+    for group in groups {
+        let mut cur = Entry::new();
+        for line in group {
+            let kv = parse_line(&line).unwrap_or(Entry::new());
+            for (field, value) in kv {
+                cur.insert(field, value);
             }
         }
+        entries.push(cur);
     }
-    entries.push(cur);
 
     entries
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let file = File::open("inputs/day04.txt")?;
-    let lines = io::BufReader::new(file).lines();
+    let file = read_to_string("inputs/day04.txt")?;
+    let lines: Vec<&str> = file.lines().collect();
 
-    let entries = parse(lines.filter_map(Result::ok));
+    let entries = parse(lines.as_slice());
 
     println!(
         "Part 1 {:?}",
@@ -279,7 +267,7 @@ mod tests {
 
     #[test]
     fn part2_valid_passports() {
-        let text = "
+        let text: Vec<_> = "
             pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980
             hcl:#623a2f
 
@@ -292,20 +280,16 @@ mod tests {
             eyr:2022
 
             iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719
-        ";
+        "
+        .lines()
+        .collect();
 
-        assert_eq!(
-            parse(text.lines().map(|x| x.to_string()))
-                .iter()
-                .filter(|&e| valid_part2(e))
-                .count(),
-            4
-        );
+        assert_eq!(parse(&text).iter().filter(|&e| valid_part2(e)).count(), 4);
     }
 
     #[test]
     fn part2_invalid_passports() {
-        let text = "
+        let text: Vec<_> = "
             eyr:1972 cid:100
             hcl:#18171d ecl:amb hgt:170 pid:186cm iyr:2018 byr:1926
 
@@ -319,14 +303,10 @@ mod tests {
             hgt:59cm ecl:zzz
             eyr:2038 hcl:74454a iyr:2023
             pid:3556412378 byr:2007
-        ";
+        "
+        .lines()
+        .collect();
 
-        assert_eq!(
-            parse(text.lines().map(|x| x.to_string()))
-                .iter()
-                .filter(|&e| valid_part2(e))
-                .count(),
-            0
-        );
+        assert_eq!(parse(&text).iter().filter(|&e| valid_part2(e)).count(), 0);
     }
 }
