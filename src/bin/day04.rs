@@ -143,7 +143,7 @@ fn parse(lines: &[&str]) -> Vec<Entry> {
     for group in groups {
         let mut cur = Entry::new();
         for line in group {
-            let kv = parse_line(&line).unwrap_or(Entry::new());
+            let kv = parse_line(&line).unwrap_or_default();
             for (field, value) in kv {
                 cur.insert(field, value);
             }
