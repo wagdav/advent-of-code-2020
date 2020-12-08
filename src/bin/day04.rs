@@ -138,7 +138,7 @@ fn parse_line(line: &str) -> Option<Entry> {
 fn parse(lines: &[&str]) -> Vec<Entry> {
     let mut entries = Vec::<Entry>::new();
 
-    let groups = lines.split(|&line| line == "");
+    let groups = lines.split(|&line| line.is_empty());
 
     for group in groups {
         let mut cur = Entry::new();
