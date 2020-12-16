@@ -1,3 +1,4 @@
+#![allow(clippy::many_single_char_names)]
 use std::error::Error;
 use std::fs::read_to_string;
 
