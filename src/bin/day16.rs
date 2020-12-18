@@ -104,15 +104,15 @@ fn find_fields(input: &Input) -> Vec<(String, usize)> {
             let (lo1, hi1) = c[0];
             let (lo2, hi2) = c[1];
 
-            let mut matching: Vec<usize> = vec![];
-            for i in &indexes {
-                if valid_tickets
-                    .iter()
-                    .all(|t| (lo1 <= t[*i] && t[*i] <= hi1) || (lo2 <= t[*i] && t[*i] <= hi2))
-                {
-                    matching.push(*i);
-                }
-            }
+            let matching: Vec<_> = indexes
+                .to_owned()
+                .into_iter()
+                .filter(|i| {
+                    valid_tickets
+                        .iter()
+                        .all(|t| (lo1 <= t[*i] && t[*i] <= hi1) || (lo2 <= t[*i] && t[*i] <= hi2))
+                })
+                .collect();
 
             if matching.len() == 1 {
                 indexes.remove(&matching[0]);

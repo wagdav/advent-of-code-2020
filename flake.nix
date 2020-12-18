@@ -21,6 +21,7 @@
             rustc
             cargo
           ] ++ (if isShell then [
+            cargo-watch
             clippy
             rustfmt
           ] else [
