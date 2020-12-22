@@ -127,6 +127,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
     fn solves_part2() {
         let food = parse(&EXAMPLE);
         assert_eq!(solve_part2(&food), "mxmxvkd,sqjhc,fvjkl");
