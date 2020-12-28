@@ -1,7 +1,6 @@
 use regex::Regex;
 use std::error::Error;
-use std::fs::File;
-use std::io::{self, BufRead};
+use std::fs::read_to_string;
 
 #[derive(Debug, PartialEq)]
 struct Entry {
@@ -59,15 +58,12 @@ impl Entry {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let file = File::open("inputs/day02.txt")?;
-    let lines = io::BufReader::new(file).lines();
-
-    let lines: Vec<String> = lines.filter_map(Result::ok).collect();
+    let input = read_to_string("inputs/day02.txt")?;
 
     println!(
         "Part 1 {:?}",
-        lines
-            .iter()
+        input
+            .lines()
             .filter_map(|line| Entry::parse(&line))
             .filter(|entry| entry.valid_part1())
             .count()
@@ -75,8 +71,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     println!(
         "Part 2 {:?}",
-        lines
-            .iter()
+        input
+            .lines()
             .filter_map(|line| Entry::parse(&line))
             .filter(|entry| entry.valid_part2())
             .count()
