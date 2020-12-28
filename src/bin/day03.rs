@@ -1,8 +1,7 @@
 use std::error::Error;
-use std::fs::File;
-use std::io::{self, BufRead};
+use std::fs::read_to_string;
 
-fn trees(input: &[String], right: usize, down: usize) -> usize {
+fn trees(input: &[&str], right: usize, down: usize) -> usize {
     input
         .iter()
         .step_by(down)
@@ -13,10 +12,8 @@ fn trees(input: &[String], right: usize, down: usize) -> usize {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let file = File::open("inputs/day03.txt")?;
-    let lines = io::BufReader::new(file).lines();
-
-    let lines: Vec<String> = lines.filter_map(Result::ok).collect();
+    let input = read_to_string("inputs/day03.txt")?;
+    let lines: Vec<_> = input.lines().collect();
 
     println!("Part 1 {:?}", trees(&lines, 3, 1));
 
@@ -41,17 +38,17 @@ mod tests {
     #[test]
     fn example() {
         let example = vec![
-            "..##.......".to_string(),
-            "#...#...#..".to_string(),
-            ".#....#..#.".to_string(),
-            "..#.#...#.#".to_string(),
-            ".#...##..#.".to_string(),
-            "..#.##.....".to_string(),
-            ".#.#.#....#".to_string(),
-            ".#........#".to_string(),
-            "#.##...#...".to_string(),
-            "#...##....#".to_string(),
-            ".#..#...#.#".to_string(),
+            "..##.......",
+            "#...#...#..",
+            ".#....#..#.",
+            "..#.#...#.#",
+            ".#...##..#.",
+            "..#.##.....",
+            ".#.#.#....#",
+            ".#........#",
+            "#.##...#...",
+            "#...##....#",
+            ".#..#...#.#",
         ];
 
         assert_eq!(trees(&example, 1, 1), 2);
