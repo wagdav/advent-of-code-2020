@@ -76,9 +76,9 @@ fn solve_part2(rules: &Rules) -> i32 {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let file = read_to_string("inputs/day07.txt")?;
-    let lines: Vec<&str> = file.lines().collect();
+    let lines: Vec<_> = file.lines().collect();
 
-    let rules = rules(lines.as_slice());
+    let rules = rules(&lines);
 
     println!("Part 1 {:?}", solve_part1(&rules));
     println!("Part 2 {:?}", solve_part2(&rules));

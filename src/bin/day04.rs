@@ -158,7 +158,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let file = read_to_string("inputs/day04.txt")?;
     let lines: Vec<&str> = file.lines().collect();
 
-    let entries = parse(lines.as_slice());
+    let entries = parse(&lines);
 
     println!(
         "Part 1 {:?}",

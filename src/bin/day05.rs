@@ -54,10 +54,10 @@ fn solve_part2(lines: &[&str]) -> i32 {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let file = read_to_string("inputs/day05.txt")?;
-    let lines: Vec<&str> = file.lines().collect();
+    let lines: Vec<_> = file.lines().collect();
 
-    println!("Part 1 {:?}", solve_part1(lines.as_slice()));
-    println!("Part 2 {:?}", solve_part2(lines.as_slice()));
+    println!("Part 1 {:?}", solve_part1(&lines));
+    println!("Part 2 {:?}", solve_part2(&lines));
 
     Ok(())
 }
