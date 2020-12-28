@@ -33,7 +33,7 @@ fn solve_part2(lines: &[&str]) -> usize {
     for group in lines.split(|&line| line == "") {
         sum += group
             .iter()
-            .fold(group.first().unwrap().to_string(), |acc, x| {
+            .fold(group[0].to_string(), |acc, x| {
                 common_answers(&acc, &x)
             })
             .len();
@@ -44,10 +44,10 @@ fn solve_part2(lines: &[&str]) -> usize {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let file = read_to_string("inputs/day06.txt")?;
-    let lines: Vec<&str> = file.lines().collect();
+    let lines: Vec<_> = file.lines().collect();
 
-    println!("Part 1 {:?}", solve_part1(lines.as_slice()));
-    println!("Part 2 {:?}", solve_part2(lines.as_slice()));
+    println!("Part 1 {:?}", solve_part1(&lines));
+    println!("Part 2 {:?}", solve_part2(&lines));
 
     Ok(())
 }
