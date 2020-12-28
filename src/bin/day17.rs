@@ -128,8 +128,9 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
     fn solves_part2() {
-        //let plan = Cube::new(&EXAMPLE, 4);
-        //assert_eq!(solve_part1(&plan), 848);
+        let plan = Cube::new(&EXAMPLE, 4);
+        assert_eq!(solve(&plan), 848);
     }
 }
