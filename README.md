@@ -1,6 +1,7 @@
-Advent of Code 2020
+My solutions to the programming puzzles in the [Advent of Code
+2020](adventofcode.com/) written in Rust.
 
-# Build
+# Build and run
 
 Install the Nix package manager then
 
@@ -13,12 +14,12 @@ Then run the solutions
 ```
 ./result/bin/day01
 ./result/bin/day02
+...
+./result/bin/day25
 ```
 
 # Develop
 
 ```
-nix develop --command cargo build
-nix develop --command cargo clippy
-nix develop --command cargo fmt
+nix develop --command cargo {build,clippy,fmt,watch}
 ```
