@@ -68,9 +68,8 @@ fn solve_part1(cups: &[usize]) -> String {
 fn play_v2(cups: &[usize], rounds: usize) -> Vec<usize> {
     let n = cups.len();
     let mut next: HashMap<usize, usize> = cups
-        .iter()
-        .zip(cups.iter().skip(1))
-        .map(|(&a, &b)| (a, b))
+        .windows(2)
+        .map(|w| (w[0], w[1]))
         .collect();
     next.insert(cups[n - 1], cups[0]);
 

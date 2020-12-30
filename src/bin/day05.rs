@@ -42,9 +42,8 @@ fn solve_part2(lines: &[&str]) -> i32 {
     r.sort();
 
     let mut x = r
-        .iter()
-        .zip(r.iter().skip(1))
-        .map(|(x, y)| (x, y - x))
+        .windows(2)
+        .map(|w| (w[0], w[1] - w[0]))
         .filter(|(_, diff)| *diff == 2);
 
     let (seat_id, _) = x.next().unwrap();

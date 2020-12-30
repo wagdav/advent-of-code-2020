@@ -9,15 +9,13 @@ fn solve_part1(input: &[i32]) -> usize {
     x.sort();
 
     let ones = x
-        .iter()
-        .zip(x.iter().skip(1))
-        .map(|(a, b)| b - a)
+        .windows(2)
+        .map(|w| w[1] - w[0])
         .filter(|&x| x == 1)
         .count();
     let three = x
-        .iter()
-        .zip(x.iter().skip(1))
-        .map(|(a, b)| b - a)
+        .windows(2)
+        .map(|w| w[1] - w[0])
         .filter(|&x| x == 3)
         .count();
 
