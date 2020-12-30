@@ -58,8 +58,8 @@ fn near(cell: &Coords) -> impl Iterator<Item = Coords> + '_ {
         .multi_cartesian_product()
         .map(|x| (x[0], x[1]))
         // Filter combinations that are invalid on a hexagon
-        .filter(move |x| *x != (cell.0 + 1, cell.1 + 1))
-        .filter(move |x| *x != (cell.0 - 1, cell.1 - 1))
+        .filter(move |&x| x != (cell.0 + 1, cell.1 + 1))
+        .filter(move |&x| x != (cell.0 - 1, cell.1 - 1))
 }
 
 fn active_neighbours(cell: &Coords, grid: &HashSet<Coords>) -> usize {

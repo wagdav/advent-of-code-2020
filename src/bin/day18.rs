@@ -39,7 +39,7 @@ fn rpn(input: &str, part: u8) -> Vec<char> {
         "+" // '+' has highest precedence, left-associative
     };
 
-    for token in input.chars().filter(|c| *c != ' ') {
+    for token in input.chars().filter(|&c| c != ' ') {
         match token {
             '0'..='9' => output.push(token),
             '(' => stack.push(token),

@@ -70,7 +70,7 @@ fn play_v2(cups: &[usize], rounds: usize) -> Vec<usize> {
     let mut next: HashMap<usize, usize> = cups
         .iter()
         .zip(cups.iter().skip(1))
-        .map(|(a, b)| (*a, *b))
+        .map(|(&a, &b)| (a, b))
         .collect();
     next.insert(cups[n - 1], cups[0]);
 
