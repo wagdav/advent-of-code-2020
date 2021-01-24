@@ -40,13 +40,13 @@ fn parse(input: &str) -> Option<Coords> {
 
 fn black_tiles(tiles: &[Coords]) -> HashSet<Coords> {
     let mut count: HashMap<Coords, usize> = HashMap::new();
-    for tile in tiles {
-        *count.entry(*tile).or_insert(0) += 1;
+    for &tile in tiles {
+        *count.entry(tile).or_insert(0) += 1;
     }
 
     count
         .iter()
-        .filter_map(|(coords, state)| if *state % 2 == 1 { Some(coords) } else { None })
+        .filter_map(|(coords, &state)| if state % 2 == 1 { Some(coords) } else { None })
         .cloned()
         .collect()
 }
