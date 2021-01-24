@@ -138,7 +138,7 @@ mod tests {
 
     #[test]
     fn parses_puzzle() {
-        assert_eq!(parse("esew"), Some((1, -1))); // se neigbour of the reference tile
+        assert_eq!(parse("esew"), Some((1, -1))); // se neighbour of the reference tile
         assert_eq!(parse("nwwswee"), Some((0, 0)));
     }
 
