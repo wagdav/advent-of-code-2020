@@ -1,5 +1,5 @@
 My solutions to the programming puzzles in the [Advent of Code
-2020](adventofcode.com/) written in Rust.
+2020](https://adventofcode.com/) written in Rust.
 
 # Build and run
 
