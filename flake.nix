@@ -1,7 +1,7 @@
 {
   description = "Advent of code 2020";
 
-  inputs.nixpkgs.url = "nixpkgs/nixos-20.09";
+  inputs.nixpkgs.url = "nixpkgs/nixos-25.05";
   inputs.import-cargo.url = "github:edolstra/import-cargo";
 
   outputs = { self, nixpkgs, import-cargo }:
